@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CheckCircle2, Target, Heart } from 'lucide-react';
+import { CheckCircle2, Target, Heart, TrendingUp } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
 // 模拟 AI 计划生成
 const generateAIPlan = (_goal: string) => {
@@ -50,9 +51,36 @@ const generateAIComfort = (task: string) => {
   return comforts[Math.floor(Math.random() * comforts.length)];
 };
 
+// 模拟习惯记录数据
+const weeklyData = [
+  { date: '周一', completed: 3, total: 3, energy: 80, mood: 75 },
+  { date: '周二', completed: 2, total: 3, energy: 65, mood: 60 },
+  { date: '周三', completed: 3, total: 3, energy: 90, mood: 85 },
+  { date: '周四', completed: 1, total: 3, energy: 50, mood: 45 },
+  { date: '周五', completed: 2, total: 3, energy: 70, mood: 65 },
+  { date: '周六', completed: 3, total: 3, energy: 85, mood: 90 },
+  { date: '周日', completed: 2, total: 3, energy: 75, mood: 80 }
+];
+
+const taskDistribution = [
+  { name: '喝水', value: 70, color: '#6366F1' },
+  { name: '运动', value: 60, color: '#F59E0B' },
+  { name: '阅读', value: 55, color: '#10B981' },
+  { name: '日记', value: 40, color: '#EC4899' }
+];
+
+const radarData = [
+  { subject: '毅力', A: 80, fullMark: 100 },
+  { subject: '能量', A: 75, fullMark: 100 },
+  { subject: '专注', A: 60, fullMark: 100 },
+  { subject: '情绪', A: 70, fullMark: 100 },
+  { subject: '社交', A: 55, fullMark: 100 },
+  { subject: '睡眠', A: 65, fullMark: 100 },
+];
+
 const App: React.FC = () => {
   // 状态管理
-  const [activeTab, setActiveTab] = useState<'checkin' | 'plan' | 'comfort'>('checkin');
+  const [activeTab, setActiveTab] = useState<'checkin' | 'plan' | 'comfort' | 'visualization'>('checkin');
   const [tasks, setTasks] = useState<{ id: string; name: string; completed: boolean }[]>([
     { id: '1', name: '早上起床后喝一杯水', completed: false },
     { id: '2', name: '每天运动 10 分钟', completed: false },
@@ -107,6 +135,7 @@ const App: React.FC = () => {
               <a href="#" className="nav-link" onClick={() => setActiveTab('checkin')}>打卡</a>
               <a href="#" className="nav-link" onClick={() => setActiveTab('plan')}>AI 计划</a>
               <a href="#" className="nav-link" onClick={() => setActiveTab('comfort')}>AI 安慰</a>
+              <a href="#" className="nav-link" onClick={() => setActiveTab('visualization')}>数据</a>
             </div>
           </nav>
         </div>
